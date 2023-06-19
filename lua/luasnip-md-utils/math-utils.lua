@@ -29,7 +29,8 @@ end
 
 function math_env.match_group(_, snip, chars)
   chars = chars == nil and { "(", ")" } or chars
-  local location = find_group_index(snip.trigger, chars)
+  local match = snip.trigger
+  local location = find_group_index(match, chars)
   if chars[1] ~= " " and location == nil then
     -- if matching parenthesis not found imply one at each space
     --   ie.  x+1)/ -> \frac{x+1}{}
