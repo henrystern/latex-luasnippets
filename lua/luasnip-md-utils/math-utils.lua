@@ -36,11 +36,11 @@ function math_env.match_group(_, snip, chars)
     --   ie.  x+1)/ -> \frac{x+1}{}
     return math_env.match_group(_, snip, { " ", chars[2] })
   elseif location == nil then
-    return string.format("\\frac{%s}", match:sub(1, #match - 2))
+    return { " ", match:sub(1, #match - 2) }
   elseif location == 1 then
-    return string.format("\\frac{%s}", match:sub(location + 1, #match - 2))
+    return { "", match:sub(2, #match - 2) }
   else
-    return string.format("%s\\frac{%s}", match:sub(1, location - 1), match:sub(location + 1, #match - 2))
+    return { match:sub(1, location - 1), match:sub(location + 1, #match - 2) }
   end
 end
 
@@ -66,7 +66,7 @@ end
 
 function math_env.no_backslash(line_to_cursor, matched_trigger)
   -- this only works if the matched_trigger starts the same as the latex trigger.
-  --   ie: sq -> \sqrt wouldnt expand on \sq but 
+  --   ie: sq -> \sqrt wouldnt expand on \sq but
   --       rt -> \sqrt would expand on \sqrt to \sq\sqrt
   local _, col = unpack(vim.api.nvim_win_get_cursor(0))
   local preceding_index = col - #matched_trigger
