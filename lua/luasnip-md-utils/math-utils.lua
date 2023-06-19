@@ -34,9 +34,10 @@ function math_env.match_group(_, snip, chars)
   if chars[1] ~= " " and location == nil then
     -- if matching parenthesis not found imply one at each space
     --   ie.  x+1)/ -> \frac{x+1}{}
-    return math_env.match_group(_, snip, { " ", chars[2] })
+    implied_before, implied_group = unpack(math_env.match_group(_, snip, { " ", chars[2] }))
+    return { implied_before .. " ", implied_group }
   elseif location == nil then
-    return { " ", match:sub(1, #match - 2) }
+    return { "", match:sub(1, #match - 2) }
   elseif location == 1 then
     return { "", match:sub(2, #match - 2) }
   else
