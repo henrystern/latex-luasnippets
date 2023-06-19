@@ -16,10 +16,4 @@ function utils.pipe(fns)
   end
 end
 
-function utils.get_capture(_, snip, num)
--- pass num with f(callback, {}, { user args = { num } })
-  num = num == nil and 1 or num
-  return snip.captures[num]
-end
-
 return utils
