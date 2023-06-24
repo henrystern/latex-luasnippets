@@ -12,7 +12,7 @@ local function find_group_index(match, chars)
   -- takes a string ending with chars[2] ie ")" and returns the index of the matching chars[1] ie "("
   local depth = 0
   local location = nil
-  for index = (#match - 1), 1, -1 do
+  for index = #match, 1, -1 do
     local char = match:sub(index, index)
     if char == chars[2] then
       depth = depth + 1
@@ -29,7 +29,7 @@ end
 
 function math_env.match_group(_, snip, chars)
   chars = chars == nil and { "(", ")" } or chars
-  local match = snip.trigger
+  local match = snip.captures[1]
   local location = find_group_index(match, chars)
   if chars[1] ~= " " and location == nil then
     -- if matching parenthesis not found imply one at each space
@@ -37,12 +37,17 @@ function math_env.match_group(_, snip, chars)
     implied_before, implied_group = unpack(math_env.match_group(_, snip, { " ", chars[2] }))
     return { implied_before .. " ", implied_group }
   elseif location == nil then
-    return { "", match:sub(1, #match - 2) }
+    return { "", match:sub(1, #match - 1) }
   elseif location == 1 then
-    return { "", match:sub(2, #match - 2) }
+    return { "", match:sub(2, #match - 1) }
   else
-    return { match:sub(1, location - 1), match:sub(location + 1, #match - 2) }
+    return { match:sub(1, location - 1), match:sub(location + 1, #match - 1) }
   end
+end
+
+function math_env.format_group(_, snip, chars, fmt_string)
+  local before, group = unpack(math_env.match_group(_, snip, chars))
+  return string.format(fmt_string, before, group)
 end
 
 -- https://github.com/iurimateus/luasnip-latex-snippets.nvim/blob/main/lua/luasnip-latex-snippets/util/ts_utils.lua
