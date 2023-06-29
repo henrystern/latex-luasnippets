@@ -1,6 +1,4 @@
-local ls = require("luasnip")
-local sn = ls.snippet_node
-local i = ls.insert_node
+local get_node_at_cursor = require("nvim-treesitter.ts_utils").get_node_at_cursor
 
 local utils = {}
 
@@ -14,6 +12,22 @@ function utils.pipe(fns)
     end
     return true
   end
+end
+
+function utils.in_node(match, exclude)
+  exclude = exclude == nil and {} or exclude
+  local node = get_node_at_cursor()
+  while node do
+    if exclude[node:type()] then
+      return false
+    elseif match[node:type()] then
+      -- set undo point
+      vim.o.undolevels = vim.o.undolevels
+      return true
+    end
+    node = node:parent()
+  end
+  return false
 end
 
 return utils

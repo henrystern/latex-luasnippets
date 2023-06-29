@@ -1,4 +1,4 @@
-local get_node_at_cursor = require("nvim-treesitter.ts_utils").get_node_at_cursor
+local utils = require("luasnip-md-utils.utils")
 
 local MATH_NODES = {
   displayed_equation = true,
@@ -52,18 +52,7 @@ end
 
 -- https://github.com/iurimateus/luasnip-latex-snippets.nvim/blob/main/lua/luasnip-latex-snippets/util/ts_utils.lua
 function math_env.is_math()
-  local node = get_node_at_cursor()
-  while node do
-    if node:type() == "text_mode" then
-      return false
-    elseif MATH_NODES[node:type()] then
-      -- set undo point
-      vim.o.undolevels = vim.o.undolevels
-      return true
-    end
-    node = node:parent()
-  end
-  return false
+  return utils.in_node(MATH_NODES, {text_mode = true})
 end
 
 function math_env.not_math()
