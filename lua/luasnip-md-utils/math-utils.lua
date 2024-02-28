@@ -52,6 +52,10 @@ end
 
 -- https://github.com/iurimateus/luasnip-latex-snippets.nvim/blob/main/lua/luasnip-latex-snippets/util/ts_utils.lua
 function math_env.is_math()
+	if vim.bo.filetype == "tex" then
+		return vim.fn["vimtex#syntax#in_mathzone"]() == 1
+	end
+
 	return utils.in_node(MATH_NODES, { text_mode = true })
 end
 
