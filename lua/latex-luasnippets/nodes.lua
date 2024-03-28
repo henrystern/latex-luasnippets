@@ -2,8 +2,8 @@ local ls = require("luasnip")
 local s = ls.snippet
 local conds = require("luasnip.extras.expand_conditions")
 
-local u = require("luasnip-md-utils.utils")
-local m = require("luasnip-md-utils.math-utils")
+local u = require("latex-luasnippets.utils")
+local m = require("latex-luasnippets.math-utils")
 
 local nodes = {}
 
@@ -15,8 +15,11 @@ local nodes = {}
 nodes.b_no_math = ls.extend_decorator.apply(s, {}, { condition = u.pipe({ conds.line_begin, m.not_math }) })
 
 -- Beginning of line and word outside of math environment with regex trigger
-nodes.br_no_math = ls.extend_decorator.apply(s, { regTrig = true },
-  { condition = u.pipe({ conds.line_begin, m.not_math }) })
+nodes.br_no_math = ls.extend_decorator.apply(
+  s,
+  { regTrig = true },
+  { condition = u.pipe({ conds.line_begin, m.not_math }) }
+)
 
 -- Beginning of word outside of math environment
 nodes.no_math = ls.extend_decorator.apply(s, {}, { condition = m.not_math })
@@ -35,12 +38,14 @@ nodes.Ar_no_math = ls.extend_decorator.apply(s, { wordTrig = false, regTrig = tr
 --
 
 -- Beginning of line and word inside of math environment
-nodes.b_math = ls.extend_decorator.apply(s, {},
-  { condition = u.pipe({ conds.line_begin, m.is_math }) })
+nodes.b_math = ls.extend_decorator.apply(s, {}, { condition = u.pipe({ conds.line_begin, m.is_math }) })
 
 -- Beginning of line and word inside of math environment with regex trigger
-nodes.br_math = ls.extend_decorator.apply(s, { regTrig = true },
-  { condition = u.pipe({ conds.line_begin, m.is_math }) })
+nodes.br_math = ls.extend_decorator.apply(
+  s,
+  { regTrig = true },
+  { condition = u.pipe({ conds.line_begin, m.is_math }) }
+)
 
 -- Beginning of word inside of math environment
 nodes.math = ls.extend_decorator.apply(s, {}, { condition = m.is_math })
