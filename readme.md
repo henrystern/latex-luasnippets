@@ -20,10 +20,10 @@ If you want to load the [included snippets](./luasnippets/tex-math.lua) add the 
 
 ```
 -- latex-luasnippets
-require("luasnip").filetype_extend("quarto", { "md-math" })
-require("luasnip").filetype_extend("markdown", { "md-math" })
-require("luasnip").filetype_extend("rmarkdown", { "md-math" })
-require("luasnip").filetype_extend("tex", { "tex-math" })
+require("luasnip").filetype_extend("quarto", { "md-envs", "tex-symbols" })
+require("luasnip").filetype_extend("markdown", { "md-envs", "tex-symbols" })
+require("luasnip").filetype_extend("rmarkdown", { "md-envs", "tex-symbols" })
+require("luasnip").filetype_extend("tex", { "tex-envs", "tex-symbols" })
 require("luasnip.loaders.from_lua").lazy_load {}
 ```
 
@@ -83,7 +83,7 @@ return {
   ),
 }, {
   -- autosnippets
-  n.no_math("mk", fmta("$<>$", dl(1, l.LS_SELECT_RAW))),
+  n.no_math("mk", fmta("\\(<>\\)", dl(1, l.LS_SELECT_RAW))),
   n.A_math("tt", fmta("\\text{<>}", { dl(1, l.LS_SELECT_RAW) })),
 }
 
@@ -129,4 +129,4 @@ return {},
   }
 ```
 
-For more node examples see the [default nodes](./lua/latex-luasnippets/nodes.lua) and for more snippet examples see the included [luasnippets](./luasnippets/tex-math.lua).
+For more node examples see the [default nodes](./lua/latex-luasnippets/nodes.lua) and for more snippet examples see the included [luasnippets](./luasnippets/tex-symbols.lua).
