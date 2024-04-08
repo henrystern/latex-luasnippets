@@ -12,11 +12,19 @@ For [lazy](https://github.com/folke/lazy.nvim) add this to your plugins file.
   {
     "henrystern/latex-luasnippets",
     ft = { "markdown", "rmarkdown", "quarto", "tex" },
-    dependencies = { "L3MON4D3/LuaSnip", "nvim-treesitter/nvim-treesitter" },
   },
 ```
 
-If you want to load the [included snippets](./luasnippets/tex-math.lua) add the following lines to your Luasnip configuration:
+If you want to load the [included snippets](./luasnippets/tex-math.lua) add this plugin as a luasnip dependency:
+
+```
+  {
+    "L3MON4D3/LuaSnip",
+    dependencies = { "henrystern/latex-luasnippets" },
+  }
+```
+
+Then add the following lines to your Luasnip configuration:
 
 ```
 -- latex-luasnippets
