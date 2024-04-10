@@ -34,7 +34,8 @@ return {
   node.A_math("ee", t("\\in ")),
   node.A_math("UU", t("\\cup ")),
   node.A_math("II", t("\\cap ")),
-  node.A_math("cc", t("\\subset ")),
+  node.A_math("cc", t("\\subseteq ")),
+  node.A_math("cd", t("\\subset ")),
 
   -- operators
   node.A_math("EE", t("\\exists ")),
